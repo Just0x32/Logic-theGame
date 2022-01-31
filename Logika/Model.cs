@@ -32,10 +32,10 @@ namespace Logika
                 secretCode[i] = random.Next(MinDigit, MaxDigit + 1);
         }
 
-        public List<Matches> GetComparisonResults(int[] code)
+        public List<Matches> GetComparisonResults(int[] guessedCode)
         {
             List<Matches> result = new List<Matches>();
-            bool[] isMatchedInputDigit = new bool[CodeLength];
+            bool[] isMatchedGuessedDigit = new bool[CodeLength];
             bool[] isMatchedSecretDigit = new bool[CodeLength];
 
             CheckForValueAndPositionMatches();
@@ -58,10 +58,10 @@ namespace Logika
             {
                 for (int i = 0; i < CodeLength; i++)
                 {
-                    if (!isMatchedInputDigit[i] && code[i] == secretCode[i])
+                    if (!isMatchedGuessedDigit[i] && guessedCode[i] == secretCode[i])
                     {
-                        result.Add(Matches.ValueAndPosition);
-                        isMatchedInputDigit[i] = true;
+                        result.Add(Matches.AtRightPlace);
+                        isMatchedGuessedDigit[i] = true;
                         isMatchedSecretDigit[i] = true;
                     }
                 }
@@ -83,15 +83,16 @@ namespace Logika
             {
                 for (int i = 0; i < CodeLength; i++)
                 {
-                    if (!isMatchedInputDigit[i])
+                    if (!isMatchedGuessedDigit[i])
                     {
                         for (int j = 0; j < CodeLength; j++)
                         {
-                            if (!isMatchedSecretDigit[j] && code[i] == secretCode[j])
+                            if (!isMatchedSecretDigit[j] && guessedCode[i] == secretCode[j])
                             {
-                                result.Add(Matches.Value);
-                                isMatchedInputDigit[i] = true;
+                                result.Add(Matches.AtWrongPlace);
+                                isMatchedGuessedDigit[i] = true;
                                 isMatchedSecretDigit[j] = true;
+                                break;
                             }
                         }
                     }
@@ -102,8 +103,8 @@ namespace Logika
         public enum Matches
         {
             None,
-            Value,
-            ValueAndPosition
+            AtWrongPlace,
+            AtRightPlace
         }
     }
 }

@@ -285,9 +285,9 @@ namespace Logika
 
                 foreach (var match in matches)
                 {
-                    if (match == Model.Matches.ValueAndPosition)
+                    if (match == Model.Matches.AtRightPlace)
                         sb.Append(" " + valueAndPositionMathesResult);
-                    else if (match == Model.Matches.Value)
+                    else if (match == Model.Matches.AtWrongPlace)
                         sb.Append(" " + onlyValueMathesResult);
                 }
 
